@@ -42,6 +42,57 @@ class Post(models.Model):
 
 
 
+class Comment(models.Model):
+    #一对多，在多侧定义外键
+    # 定义好这个之后，我们通过使用comment.post就可以从一条评论来取到对应的帖子，
+    # 以及通过使用post.comments.all()来取回一个帖子所有的评论
+    post = models.ForeignKey(Post, related_name='comments')
+    name = models.CharField(max_length=80)
+    email = models.EmailField()
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
+
+    # 我们用一个active布尔字段用来手动禁用那些不合适的评论。默认情况下，
+    # 我们根据created字段，对评论按时间顺序进行排序
+    class Meta:
+        ordering = ('created',)
+
+    def __str__(self):
+        return 'Comment by {} on {}'.format(self.name, self.post)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     
