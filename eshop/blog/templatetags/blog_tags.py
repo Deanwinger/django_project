@@ -1,8 +1,9 @@
 from django import template
+import markdown
 
 register = template.Library()
 
-from .. import Post
+from ..models import Post
 from django.db.models import Count
 from django.utils.safestring import mark_safe
 
@@ -10,7 +11,7 @@ from django.utils.safestring import mark_safe
 def total_posts():
     return Post.published.count()
 
-@register.inclusion_tags('blog/post/latest_posts.html')
+@register.inclusion_tag('blog/post/latest_posts.html')
 def show_latest_posts(count=5):
     latest_posts = Post.published.order_by('-publish')[:count]
     return {'latest_posts': latest_posts}
