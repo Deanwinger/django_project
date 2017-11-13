@@ -1,0 +1,19 @@
+{% extends "blog/base.html" %}
+
+{% block title %}My Blog{% endblock %}
+
+{% block content %}
+    <h1>My Blog</h1>
+    {% for post in posts%}
+        <h2>
+            <a href="{{ post.get_absolute_url }}">
+                {{ post.title }}
+            </a>
+        </h2>
+        <p class="date">
+            Published {{ post.publish }} by {{ post.author }}
+        </p>
+        <!-- 我们应用了两个模板过滤器（template filters）： truncatewords用来缩短内容限制在一定的字数内，linebreaks用来转换内容中的换行符为HTML的换行符。 -->
+        {{ post.body|truncatewords:30|linebreaks }}
+    {%endfor%}
+{% endblock %}
