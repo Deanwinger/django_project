@@ -13,6 +13,7 @@
         <p class="date">
             Published {{ post.publish }} by {{ post.author }}
         </p>
+        {% include "pagination.html" with page=posts %}
         <!-- 我们应用了两个模板过滤器（template filters）： truncatewords用来缩短内容限制在一定的字数内，linebreaks用来转换内容中的换行符为HTML的换行符。 -->
         {{ post.body|truncatewords:30|linebreaks }}
     {%endfor%}
