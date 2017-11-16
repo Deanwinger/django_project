@@ -9,6 +9,28 @@
 <body>
     <div id="header">
         <span class="logo">Bookmarks</span>
+        {% if request.user.is_authenticated %}
+            <ul class="menu">
+                <!-- 检查当前的section通过使用CSS来给对应的<li>组件添加一个selected的class属性来使当前section在菜单中进行高亮显示 -->
+                <li {% if section == "dashboard" %} class="selected" {% endif %}>
+                    <a href="{% url "dashboard" %}">My dashboard</a>
+                </li>
+                <li {% if section == "images" %} class="selected" {% endif %}>
+                    <a href="{% url "#" %}">Images</a>
+                </li>
+                <li {% if section == "people" %} class="selected" {% endif %}>
+                    <a href="{% url "#" %}">People</a>
+                </li>
+            </ul>
+        {% endif %}
+        <span class="user">
+            {% if request.user.is_authenticated %}
+                Hello {{ request.user.first_name }},
+                <a href="{% url "logout" %}">Logout</a>
+            {% else %}
+                <a href="{% url "login" %}">Log-in</a>
+            {% endif %}
+        </span>
     </div>
     <div id="content">
         {% block content %}

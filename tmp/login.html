@@ -3,11 +3,23 @@
 {% block title %}Log-in{% endblock %}
 {% block content %}
     <h1>Log-in</h1>
-    <p>Please, use the following form to log-in:</p>
-    <form action="." method="post">
+    {% if form.error %}
+        <p>
+        Your username and password didn't match.
+        Please try again.
+        </p>
+    {% else %}
+        <p>Please, use the following form to log-in:</p>
+    {% endif %}
+    <div class="login-form">
+        <form action="{% url 'login' %}" method="post">
         {{ form.as_p }}
         <!-- {% csrf_token %}标签(tag)用来CSRF保护 -->
         {% csrf_token %}
+        <!-- 隐藏的HTML<input>元素来提交叫做next的变量值, next参数必须是一个URL。当这个参数被给予的时候，Django登录视图（view）将会在用户登录完成后重定向到给予的URL,登录视图（view）会将登录成功的用户重定向到用户登录之前尝试访问过的URL-->
+        <input type="hidden" name="next" value="{{ next }}">
         <p><input type="submit" value="Log-in"></p>
-    </form>
+        </form>
+    </div>
+
 {% endblock %}
